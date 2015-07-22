@@ -19,7 +19,7 @@ http://scikit-learn.org/
 
 if __name__ == "__main__":
 
-    aveLoop = 1
+    aveLoop = 30
     average = np.array([0]*16) #平均計算用8+8
 
     # MNISTの数字データ
@@ -111,13 +111,6 @@ if __name__ == "__main__":
             else:
                 labels_train_4 = np.insert(labels_train_4, i, 0, axis=1)
                 labels_test_4 = np.insert(labels_test_4, i, 0, axis=1)
-
-
-        # 訓練データとテストデータに分解
-        X_train_4, X_test_4, y_train_4, y_test_4 = train_test_split(X_4, y_4, test_size=0.1)
-        # 教師信号の数字を1-of-K表記に変換(全てのデータ)
-        labels_train_4 = LabelBinarizer().fit_transform(y_train_4)
-        labels_test_4 = LabelBinarizer().fit_transform(y_test_4)
 
         """
         # データのと教師信号のテスト描画

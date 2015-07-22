@@ -159,7 +159,7 @@ class MultiLayerPerceptron:
 
                 p, r, f, s = precision_recall_fscore_support(ytest, predictions, beta=0.5)
 
-                # 
+                #
                 if len(p) <= 9:
                     p = np.insert(p, 4, 0)
                 if len(r) <= 9:

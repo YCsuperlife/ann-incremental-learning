@@ -19,7 +19,7 @@ http://scikit-learn.org/
 
 if __name__ == "__main__":
 
-    aveLoop = 5
+    aveLoop = 30
     average = np.array([0]*16) #平均計算用8+8
 
     # MNISTの数字データ
@@ -51,7 +51,7 @@ if __name__ == "__main__":
         print "***",loop,"***"
 
         # ファイルの作成
-        # precision
+        # precision_recall_fscore_support
         preMat = open("./precision/preMat"+str(loop)+".csv", "w")
         preMat = csv.writer(preMat)
         # recall
@@ -62,7 +62,7 @@ if __name__ == "__main__":
         fscMat = csv.writer(fscMat)
 
         # 多層パーセプトロンを構築
-        mlp = MultiLayerPerceptron(28*28, 1000, 10, act1="tanh", act2="softmax", preMat=preMat, recMat=recMat, fscMat=fscMat)
+        mlp = MultiLayerPerceptron(28*28, 200, 10, act1="sigmoid", act2="softmax", preMat=preMat, recMat=recMat, fscMat=fscMat)
 
         #-------------------------------
         # 訓練データ、テストデータを用意する
@@ -103,7 +103,8 @@ if __name__ == "__main__":
         labels_train_4 = LabelBinarizer().fit_transform(y_train_4)
         labels_test_4 = LabelBinarizer().fit_transform(y_test_4)
         # 列の挿入 (行列, 挿入したい場所, 挿入したい値, axis=1)
-        # [0]のようなリストになっているため、1と0を挿入して1-of-kデータを作成する.
+        # [0]のようなリストになっているため、1と0を挿入して,
+        # 自作で1-of-kデータを作成する.
         for i in range(9):
             if i == 4:
                 labels_train_4 = np.insert(labels_train_4, 4, 1, axis=1)
@@ -113,12 +114,7 @@ if __name__ == "__main__":
                 labels_test_4 = np.insert(labels_test_4, i, 0, axis=1)
 
 
-        # 訓練データとテストデータに分解
-        X_train_4, X_test_4, y_train_4, y_test_4 = train_test_split(X_4, y_4, test_size=0.1)
-        # 教師信号の数字を1-of-K表記に変換(全てのデータ)
-        labels_train_4 = LabelBinarizer().fit_transform(y_train_4)
-        labels_test_4 = LabelBinarizer().fit_transform(y_test_4)
-
+     
         """
         # データのと教師信号のテスト描画
         plt.imshow(X_train_4[6].reshape(28, 28))
