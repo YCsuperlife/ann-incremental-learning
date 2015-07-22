@@ -125,7 +125,7 @@ if __name__ == "__main__":
         trainNum = 3000
 
         # 先行学習を行う
-        mlp.fit(X_train_without4, labels_train_without4, learning_rate=0.01, epochs=trainNum, xtest=X_test_all, ytest=y_test_all)
+        mlp.fit(X_train_without4, labels_train_without4, learning_rate=0.01, epochs=trainNum, xtest=X_test_without4, ytest=y_test_without4)
 
         # 結果の表示
         # テストデータを用いて予測精度を計算

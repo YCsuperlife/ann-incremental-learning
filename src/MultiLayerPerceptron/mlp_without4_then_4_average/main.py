@@ -114,7 +114,7 @@ if __name__ == "__main__":
                 labels_test_4 = np.insert(labels_test_4, i, 0, axis=1)
 
 
-     
+
         """
         # データのと教師信号のテスト描画
         plt.imshow(X_train_4[6].reshape(28, 28))
@@ -128,7 +128,7 @@ if __name__ == "__main__":
         trainNum = 3000
 
         # 先行学習を行う
-        mlp.fit(X_train_without4, labels_train_without4, learning_rate=0.01, epochs=trainNum, xtest=X_test_all, ytest=y_test_all)
+        mlp.fit(X_train_without4, labels_train_without4, learning_rate=0.01, epochs=trainNum, xtest=X_test_without4, ytest=y_test_without4)
 
         # 結果の表示
         # テストデータを用いて予測精度を計算
