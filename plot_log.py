@@ -8,7 +8,8 @@ argvs = sys.argv
 argc = len(argvs)
 
 # シミュレーションで取得したステップ
-template = [5, 10, 50, 100, 500, 1000, 1500, 3000, 5000, 7500, 10000, 15000, 30000, 35000, 50000]
+#template = [5, 10, 50, 100, 500, 1000, 1500, 3000, 5000, 7500, 10000, 15000, 30000, 35000, 50000]
+template = [5, 10, 50, 100, 500, 1000, 1500, 3000, 3005, 3010, 3050, 3100, 3500, 4000, 4500, 6000]
 
 if argc < 2:
     print "file not found."
@@ -18,7 +19,7 @@ if argc < 2:
 filename = argvs[1]
 # 読み込む
 data = np.loadtxt(filename, delimiter=",")
-#data = data[1:]
+data = data[1:]
 
 # 次元数をサンプル数の数と合わせる
 file_dim = len(data[1:]) + 1
@@ -54,4 +55,10 @@ plt.ylabel("F-score")
 # x軸のラベル
 plt.xlabel("Step")
 
+#plt.show()
+
+#loc='lower right'で、右下に凡例を表示
+#plt.legend(range(10), bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0)
+# 右側の余白を調整
+#plt.subplots_adjust(right=0.8)
 plt.show()
