@@ -145,9 +145,7 @@ class MultiLayerPerceptron:
 
             # 出力層の誤差を用いて出力層の重みを更新
             z = np.atleast_2d(z)
-
             delta2 = np.atleast_2d(delta2)
-
             self.weight2 -= learning_rate * np.dot(delta2.T, z)
 
             # 指定されたepochsの時、汎化誤差を計算してファイルに出力

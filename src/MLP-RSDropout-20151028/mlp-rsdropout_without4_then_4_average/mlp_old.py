@@ -186,10 +186,6 @@ class MultiLayerPerceptron:
 
 
 
-            print "dbg:", delta2.shape
-            print z.shape
-            print self.weight2.shape
-            exit()
             respons = np.dot(delta2.T, z)
             respons2 = np.sum(np.abs(respons), axis=0)
             respons2 = respons2[1:]
@@ -296,3 +292,4 @@ if __name__ == "__main__":
     """
     mlp = MultiLayerPerceptron(2, 10, 1, "tanh", "sigmoid")
     print mlp.makeMask()
+ 

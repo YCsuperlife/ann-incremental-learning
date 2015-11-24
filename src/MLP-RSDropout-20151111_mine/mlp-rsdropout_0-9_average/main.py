@@ -1,4 +1,4 @@
-# coding:utf-8
+#coding:utf-8
 import numpy as np
 from mlp import MultiLayerPerceptron
 from sklearn.datasets import fetch_mldata
@@ -16,9 +16,8 @@ http://scikit-learn.org/
 """
 
 if __name__ == "__main__":
-
     aveLoop = 1
-    average = np.array([0]*16) #平均計算用8+8
+    average = np.array([0]*16) # 平均計算用8+8
 
     # MNISTの数字データ
     # 70000サンプル, 28x28ピクセル
@@ -43,10 +42,9 @@ if __name__ == "__main__":
     if not os.path.isdir("./F-score"):
         os.mkdir("./F-score")
 
-
     # 平均の回数だけ繰り返す
     for loop in range(aveLoop):
-        print "***",loop,"***"
+        print "***", loop, "***"
 
         # ファイルの作成
         # precision
@@ -60,7 +58,7 @@ if __name__ == "__main__":
         fscMat = csv.writer(fscMat)
 
         # 多層パーセプトロンを構築
-        mlp = MultiLayerPerceptron(28*28, 1000, 10, act1="tanh", act2="softmax", preMat=preMat, recMat=recMat, fscMat=fscMat)
+        mlp = MultiLayerPerceptron(28*28, 1000, 10, act1="sigmoid", act2="softmax", preMat=preMat, recMat=recMat, fscMat=fscMat)
 
         #####################
         # 0~9の全てのデータ

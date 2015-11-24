@@ -97,13 +97,13 @@ class MultiLayerPerceptron:
         # 重みを (-1.0, 1.0)の一様乱数で初期化
         self.weight1 = np.random.uniform(-1.0, 1.0, (self.numHidden, self.numInput))  # 入力層-隠れ層間
         self.weight2 = np.random.uniform(-1.0, 1.0, (self.numOutput, self.numHidden)) # 隠れ層-出力層間
-
+ 
         # 中間層の使用回数を初期化(バイアス項込み)
         self.hiddenCount = np.array([0.001]*self.numHidden)
 
         # 中間層のニューロンの価値を初期化(バイアス項なし)
         #self.hiddenValue = np.random.uniform(-1.0, 1.0, (numHidden))
-        self.hiddenValue = np.random.uniform(0.0, 1.0, (numHidden))
+        self.hiddenValue = np.random.uniform(-1.0, 0.0, (numHidden))
 
         # 上位x%のユニット＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿を分けるしきい値とRSのリファレンス
         self.threshold = 0.25
@@ -111,7 +111,7 @@ class MultiLayerPerceptron:
         #self.ref = 1.0 - self.threshold
 
         #ニューロンの価値の更新に用いる学習率
-        self.alpha = 0.75
+        self.alpha = 0.5
 
     def fit(self, X, t, learning_rate=0.1, epochs=10000, xtest=None, ytest=None):
         self.xtest = xtest
@@ -179,31 +179,32 @@ class MultiLayerPerceptron:
             self.weight1 -= learning_rate * np.dot(delta1.T, x) * m2.T
 
             # 出力層の誤差を用いて出力層の重みを更新
-            temp_z = z
             z = np.atleast_2d(z)
             delta2 = np.atleast_2d(delta2)
             self.weight2 -= learning_rate * np.dot(delta2.T, z) * m2
 
+            # [中間-出力層]の重みの修正量
+            # correction = np.dot(delta2.T, z)
+            # s = np.sum(np.abs(correction)) + 0.5
 
-
-            print "dbg:", delta2.shape
-            print z.shape
-            print self.weight2.shape
-            exit()
-            respons = np.dot(delta2.T, z)
-            respons2 = np.sum(np.abs(respons), axis=0)
-            respons2 = respons2[1:]
-
-
-            # |修正量|の総和
-            #respons = np.sum(np.abs(delta2), axis=0)
-            #respons2 = respons[1:]
-
-
-
+            # print "============"
+            # print self.weight2.size
+            # print self.weight2[0].size
+            # print self.weight2[0][0].size
+            # print correction
+            # print "~~~~~~~~~~~~"
+            s = (z[0][1:] / 2.0) + 0.5
+            #print s[0][1:]
+            #print s.size
+            #print self.hiddenValue.size
+            #print s.size
+            #exit()
+            # respons2 = np.sum(np.abs(respons), axis=0)
+            # respons2 = respons2[1:]
 
             #self.hiddenValue += self.alpha * actRate * ( (-e)  - self.hiddenValue)
-            self.hiddenValue += self.alpha * ( respons2 * (1.0/e)  - self.hiddenValue)
+            #self.hiddenValue += self.alpha * ( respons2 * (-e)  - self.hiddenValue)
+            self.hiddenValue += self.alpha * (s * (-e) - self.hiddenValue)
 
             countOf4 = 0
             predictions = []
@@ -239,12 +240,8 @@ class MultiLayerPerceptron:
         h = (np.atleast_2d(self.hiddenCount))
         #print self.weight2*(h/h[0][0])
 
-#        z = self.act1(np.dot(self.weight1 * (h.T/int(h[0][0])), x))
-#        y = self.act2(np.dot(self.weight2 * (h/int(h[0][0])), z))
-#        z = self.act1(np.dot(self.weight1 * 0.5, x))
-#        y = self.act2(np.dot(self.weight2 * 0.5, z))
-        z = self.act1(np.dot(self.weight1, x))
-        y = self.act2(np.dot(self.weight2, z))
+        z = self.act1(np.dot(self.weight1 * (h.T/int(h[0][0])), x))
+        y = self.act2(np.dot(self.weight2 * (h/int(h[0][0])), z))
 
         return y
 
@@ -277,10 +274,6 @@ class MultiLayerPerceptron:
         m = np.insert(m,0,1)
         # 使用回数をカウントする
         self.hiddenCount += m
-
-#        for i in range(len(m)):
-#            print "mask:", str(m[i])
-#        print "==================="
 
         return m
 

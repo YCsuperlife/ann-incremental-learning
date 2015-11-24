@@ -105,7 +105,7 @@ class MultiLayerPerceptron:
         #self.hiddenValue = np.random.uniform(-1.0, 1.0, (numHidden))
         self.hiddenValue = np.random.uniform(0.0, 1.0, (numHidden))
 
-        # 上位x%のユニット＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿を分けるしきい値とRSのリファレンス
+        # 上位x%のユニットを分けるしきい値とRSのリファレンス
         self.threshold = 0.25
         #self.ref = 1.0 - self.threshold
 
